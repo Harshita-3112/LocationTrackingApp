@@ -41,7 +41,7 @@ const Home = () => {
       distanceFilter: 10,
       stopTimeout: 5,
       debug: true,
-      // logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+
       stopOnTerminate: false,
       startOnBoot: true,
       notification: {
@@ -105,7 +105,7 @@ const Home = () => {
       <View style={styles.latLonContainer}>
         <Text>
           {location
-            ? `Latitude: ${location.latitude},                 Longitude: ${location.longitude}`
+            ? `Latitude: ${location.latitude}, Longitude: ${location.longitude}`
             : 'Location not available'}
         </Text>
       </View>
