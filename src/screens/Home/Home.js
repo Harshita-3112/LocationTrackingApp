@@ -8,9 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import BackgroundGeolocation, {
-  Location,
-} from 'react-native-background-geolocation';
+import BackgroundGeolocation from 'react-native-background-geolocation';
 import {scale} from 'react-native-size-matters';
 import auth from '@react-native-firebase/auth';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
@@ -43,7 +41,7 @@ const Home = () => {
       distanceFilter: 10,
       stopTimeout: 5,
       debug: true,
-      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+      // logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
       stopOnTerminate: false,
       startOnBoot: true,
       notification: {
