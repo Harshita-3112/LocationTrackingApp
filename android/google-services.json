@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "320827919935",
+    "project_id": "location-tracker-4b519",
+    "storage_bucket": "location-tracker-4b519.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320827919935:android:a767f21ec692295918728a",
+        "android_client_info": {
+          "package_name": "com.taskmanagar2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320827919935-uffeo8rhtfiigd4r6la83qdp85m1g7o2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taskmanagar2",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "320827919935-8ljo1lligfij46pjmq3c0m01ufoh6flt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJSbg8mtlkiq5Nn5Mfc1o1H3U1jq5gAAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320827919935-8ljo1lligfij46pjmq3c0m01ufoh6flt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
