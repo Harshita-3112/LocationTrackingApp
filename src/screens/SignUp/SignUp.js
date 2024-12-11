@@ -16,8 +16,9 @@ import {
 } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
+import style from './styles';
 
-const Login = () => {
+const SignUp = () => {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -25,27 +26,67 @@ const Login = () => {
 
   const navigation = useNavigation();
 
+  const handleSignIn = () => {
+    navigation.navigate('SignIn');
+  };
+
+  // const handleSignUp = () => {
+  //   if (
+  //     name != null &&
+  //     name != ' ' &&
+  //     name.trim().length > 2 &&
+  //     email != null &&
+  //     password?.length > 4
+  //   ) {
+  //     // console.log('name', name.trim(), email, password);
+
+  //     auth()
+  //       .createUserWithEmailAndPassword(email, password)
+  //       .then(() => {
+  //         console.log('success');
+  //         navigation.navigate('Home');
+  //       })
+  //       .catch(error => {
+  //         console.log(error, 'error');
+  //       });
+  //   } else {
+  //     Alert.alert('Warning', 'please enter valid details');
+  //     return;
+  //   }
+  // };
+
   const handleSignUp = () => {
-    if (
-      name != null &&
-      name != ' ' &&
-      email != null &&
-      email.includes('@gmail.com') &&
-      password?.length > 4
-    ) {
-      auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          console.log('success');
-          navigation.navigate('Home');
-        })
-        .catch(error => {
-          console.log(error, 'error');
-        });
-    } else {
-      Alert.alert('Warning', 'please enter valid details');
+    // Validate Name
+    const isValidName = name && name.trim().length > 2;
+    if (!isValidName) {
+      Alert.alert('Warning', 'Please enter valid name');
       return;
     }
+
+    // Validate Email
+    const isValidEmail = email;
+    if (!isValidEmail) {
+      Alert.alert('Warning', 'Please enter valid email address.');
+      return;
+    }
+
+    // Validate Password
+    const isValidPassword = password && password?.length >= 6;
+    if (!isValidPassword) {
+      Alert.alert('Warning', 'Password must be at least 6 characters long.');
+      return;
+    }
+
+    //Firebase authentication
+    auth()
+      .createUserWithEmailAndPassword(email.trim(), password)
+      .then(() => {
+        console.log('success');
+      })
+      .catch(error => {
+        console.log(error, 'error');
+        Alert.alert('Error', error.message);
+      });
   };
 
   GoogleSignin.configure({
@@ -110,6 +151,23 @@ const Login = () => {
         <Text style={styles.signUpText}>SignUp</Text>
       </TouchableOpacity>
 
+      <View
+        style={{
+          flexDirection: 'row',
+          marginHorizontal: 24,
+          marginTop: 14,
+          alignContent: 'center',
+          justifyContent: 'center',
+        }}>
+        <Text style={{alignSelf: 'center'}}> already have an account? </Text>
+        <TouchableOpacity onPress={handleSignIn}>
+          <Text
+            style={{color: '#54408C', alignSelf: 'center', fontWeight: '500'}}>
+            Sign In
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.dividerContainer}>
         <View style={styles.divider}></View>
         <Text style={{color: '#A6A6A6'}}>Or </Text>
@@ -124,16 +182,13 @@ const Login = () => {
           source={require('../../assets/images/google.png')}
           style={{height: 20, width: 20}}
         />
-        <Text
-          style={{color: '#121212', fontWeight: '600', fontSize: 14, left: 10}}>
-          Sign in with Google
-        </Text>
+        <Text style={style.textStyle}>Sign in with Google</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default Login;
+export default SignUp;
 
 const styles = StyleSheet.create({
   container: {

@@ -3,7 +3,9 @@ import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {AuthContext} from '../context/AuthContext';
 import Home from '../screens/Home/Home';
-import Login from '../screens/Login/Login';
+
+import SignUp from '../screens/SignUp/SignUp';
+import SignIn from '../screens/SignIn/SignIn';
 
 const Stack = createStackNavigator();
 const AuthNavigator = () => {
@@ -17,7 +19,8 @@ const AuthNavigator = () => {
         </>
       ) : (
         <>
-          <Stack.Screen name={'Login'} component={Login} />
+          {/* <Stack.Screen name={'SignUp'} component={SignUp} /> */}
+          <Stack.Screen name={'SignIn'} component={SignIn} />
         </>
       )}
     </Stack.Navigator>

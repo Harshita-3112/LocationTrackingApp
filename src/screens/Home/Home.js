@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   PermissionsAndroid,
   Text,
@@ -6,33 +6,53 @@ import {
   View,
   Platform,
   StyleSheet,
+  Alert,
 } from 'react-native';
 
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import {scale} from 'react-native-size-matters';
 import auth from '@react-native-firebase/auth';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import {TOKEN} from '../SignIn/SignIn';
+import axios from 'axios';
+import {createTracking} from '../../services/Tracker/createTracking';
+import {AuthContext} from '../../context/AuthContext';
 
 const Home = () => {
+  const {handleLogout} = useContext(AuthContext);
   const [enabled, setEnabled] = useState(false);
   const [location, setLocation] = useState(null); //user location
   const [region, setRegion] = useState(null); //map region
 
-  const handleLogOut = async () => {
-    await auth().signOut();
-  };
-
   useEffect(() => {
-    const onLocation = BackgroundGeolocation.onLocation(location => {
-      console.log('[onLocation]', location);
+    const onLocation = BackgroundGeolocation.onLocation(async location => {
       const {latitude, longitude} = location.coords;
-      setLocation({latitude, longitude});
-      setRegion({
-        latitude,
-        longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      });
+      if (latitude != null && longitude != null) {
+        setLocation({latitude, longitude});
+        setRegion({
+          latitude,
+          longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        });
+
+        try {
+          const response = await createTracking(latitude, longitude);
+          console.log('response', response.data);
+        } catch (error) {
+          console.log('err here', error);
+
+          Alert.alert(
+            'Warning',
+            error?.response?.data?.message ||
+              error?.message ||
+              'Something went wrong',
+          );
+        }
+      } else {
+        console.log('Latitude or Longitude is missing', latitude, longitude);
+        Alert.alert('Warning', 'Latitude or Longitude is missing');
+      }
     });
 
     // Configure the background geolocation plugin
@@ -122,7 +142,7 @@ const Home = () => {
         </View>
       )}
 
-      <TouchableOpacity onPress={handleLogOut} style={styles.logOutButton}>
+      <TouchableOpacity onPress={handleLogout} style={styles.logOutButton}>
         <Text style={styles.text}>Logout</Text>
       </TouchableOpacity>
     </View>
